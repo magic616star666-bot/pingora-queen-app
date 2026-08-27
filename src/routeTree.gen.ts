@@ -10,33 +10,193 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CallsRouteImport } from './routes/calls'
+import { Route as ChatsRouteImport } from './routes/chats'
+import { Route as CommunitiesRouteImport } from './routes/communities'
+import { Route as NewGroupRouteImport } from './routes/new-group'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as UpdatesRouteImport } from './routes/updates'
+import { Route as CallUserIdRouteImport } from './routes/call.$userId'
+import { Route as ChatChatIdRouteImport } from './routes/chat.$chatId'
+import { Route as ContactChatIdRouteImport } from './routes/contact.$chatId'
+import { Route as GroupChatIdRouteImport } from './routes/group.$chatId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CallsRoute = CallsRouteImport.update({
+  id: '/calls',
+  path: '/calls',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatsRoute = ChatsRouteImport.update({
+  id: '/chats',
+  path: '/chats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommunitiesRoute = CommunitiesRouteImport.update({
+  id: '/communities',
+  path: '/communities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewGroupRoute = NewGroupRouteImport.update({
+  id: '/new-group',
+  path: '/new-group',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UpdatesRoute = UpdatesRouteImport.update({
+  id: '/updates',
+  path: '/updates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CallUserIdRoute = CallUserIdRouteImport.update({
+  id: '/call/$userId',
+  path: '/call/$userId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatChatIdRoute = ChatChatIdRouteImport.update({
+  id: '/chat/$chatId',
+  path: '/chat/$chatId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactChatIdRoute = ContactChatIdRouteImport.update({
+  id: '/contact/$chatId',
+  path: '/contact/$chatId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GroupChatIdRoute = GroupChatIdRouteImport.update({
+  id: '/group/$chatId',
+  path: '/group/$chatId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/calls': typeof CallsRoute
+  '/chats': typeof ChatsRoute
+  '/communities': typeof CommunitiesRoute
+  '/new-group': typeof NewGroupRoute
+  '/profile': typeof ProfileRoute
+  '/settings': typeof SettingsRoute
+  '/updates': typeof UpdatesRoute
+  '/call/$userId': typeof CallUserIdRoute
+  '/chat/$chatId': typeof ChatChatIdRoute
+  '/contact/$chatId': typeof ContactChatIdRoute
+  '/group/$chatId': typeof GroupChatIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/calls': typeof CallsRoute
+  '/chats': typeof ChatsRoute
+  '/communities': typeof CommunitiesRoute
+  '/new-group': typeof NewGroupRoute
+  '/profile': typeof ProfileRoute
+  '/settings': typeof SettingsRoute
+  '/updates': typeof UpdatesRoute
+  '/call/$userId': typeof CallUserIdRoute
+  '/chat/$chatId': typeof ChatChatIdRoute
+  '/contact/$chatId': typeof ContactChatIdRoute
+  '/group/$chatId': typeof GroupChatIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/calls': typeof CallsRoute
+  '/chats': typeof ChatsRoute
+  '/communities': typeof CommunitiesRoute
+  '/new-group': typeof NewGroupRoute
+  '/profile': typeof ProfileRoute
+  '/settings': typeof SettingsRoute
+  '/updates': typeof UpdatesRoute
+  '/call/$userId': typeof CallUserIdRoute
+  '/chat/$chatId': typeof ChatChatIdRoute
+  '/contact/$chatId': typeof ContactChatIdRoute
+  '/group/$chatId': typeof GroupChatIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/calls'
+    | '/chats'
+    | '/communities'
+    | '/new-group'
+    | '/profile'
+    | '/settings'
+    | '/updates'
+    | '/call/$userId'
+    | '/chat/$chatId'
+    | '/contact/$chatId'
+    | '/group/$chatId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/calls'
+    | '/chats'
+    | '/communities'
+    | '/new-group'
+    | '/profile'
+    | '/settings'
+    | '/updates'
+    | '/call/$userId'
+    | '/chat/$chatId'
+    | '/contact/$chatId'
+    | '/group/$chatId'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/calls'
+    | '/chats'
+    | '/communities'
+    | '/new-group'
+    | '/profile'
+    | '/settings'
+    | '/updates'
+    | '/call/$userId'
+    | '/chat/$chatId'
+    | '/contact/$chatId'
+    | '/group/$chatId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
+  CallsRoute: typeof CallsRoute
+  ChatsRoute: typeof ChatsRoute
+  CommunitiesRoute: typeof CommunitiesRoute
+  NewGroupRoute: typeof NewGroupRoute
+  ProfileRoute: typeof ProfileRoute
+  SettingsRoute: typeof SettingsRoute
+  UpdatesRoute: typeof UpdatesRoute
+  CallUserIdRoute: typeof CallUserIdRoute
+  ChatChatIdRoute: typeof ChatChatIdRoute
+  ContactChatIdRoute: typeof ContactChatIdRoute
+  GroupChatIdRoute: typeof GroupChatIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +208,107 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calls': {
+      id: '/calls'
+      path: '/calls'
+      fullPath: '/calls'
+      preLoaderRoute: typeof CallsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chats': {
+      id: '/chats'
+      path: '/chats'
+      fullPath: '/chats'
+      preLoaderRoute: typeof ChatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/communities': {
+      id: '/communities'
+      path: '/communities'
+      fullPath: '/communities'
+      preLoaderRoute: typeof CommunitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/new-group': {
+      id: '/new-group'
+      path: '/new-group'
+      fullPath: '/new-group'
+      preLoaderRoute: typeof NewGroupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/updates': {
+      id: '/updates'
+      path: '/updates'
+      fullPath: '/updates'
+      preLoaderRoute: typeof UpdatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/call/$userId': {
+      id: '/call/$userId'
+      path: '/call/$userId'
+      fullPath: '/call/$userId'
+      preLoaderRoute: typeof CallUserIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat/$chatId': {
+      id: '/chat/$chatId'
+      path: '/chat/$chatId'
+      fullPath: '/chat/$chatId'
+      preLoaderRoute: typeof ChatChatIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact/$chatId': {
+      id: '/contact/$chatId'
+      path: '/contact/$chatId'
+      fullPath: '/contact/$chatId'
+      preLoaderRoute: typeof ContactChatIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/group/$chatId': {
+      id: '/group/$chatId'
+      path: '/group/$chatId'
+      fullPath: '/group/$chatId'
+      preLoaderRoute: typeof GroupChatIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
+  CallsRoute: CallsRoute,
+  ChatsRoute: ChatsRoute,
+  CommunitiesRoute: CommunitiesRoute,
+  NewGroupRoute: NewGroupRoute,
+  ProfileRoute: ProfileRoute,
+  SettingsRoute: SettingsRoute,
+  UpdatesRoute: UpdatesRoute,
+  CallUserIdRoute: CallUserIdRoute,
+  ChatChatIdRoute: ChatChatIdRoute,
+  ContactChatIdRoute: ContactChatIdRoute,
+  GroupChatIdRoute: GroupChatIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
