@@ -23,7 +23,7 @@ export const Route = createFileRoute("/new-group")({
 });
 
 function NewGroup() {
-  const { users, createGroup } = useStore();
+  const { contacts, createGroup } = useStore();
   const navigate = useNavigate();
   const [step, setStep] = useState<"members" | "details">("members");
   const [picked, setPicked] = useState<string[]>([]);
@@ -39,7 +39,7 @@ function NewGroup() {
       {step === "members" ? (
         <>
           <ul className="pt-1 pb-28">
-            {Object.values(users).map((u) => {
+            {contacts.map((u) => {
               const active = picked.includes(u.id);
               return (
                 <li key={u.id}>
@@ -106,9 +106,15 @@ function NewGroup() {
             className="h-12 w-full rounded-full"
             disabled={!name.trim()}
             onClick={() => {
-              const id = createGroup(name.trim(), picked, description.trim() || undefined);
-              toast.success("Group created");
-              void navigate({ to: "/chat/$chatId", params: { chatId: id } });
+              void (async () => {
+                try {
+                  const id = await createGroup(name.trim(), picked, description.trim() || undefined);
+                  toast.success("Group created");
+                  void navigate({ to: "/chat/$chatId", params: { chatId: id } });
+                } catch {
+                  /* error surfaced by the store */
+                }
+              })();
             }}
           >
             Create group
