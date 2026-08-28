@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedCallsRouteImport } from './routes/_authenticated/calls'
 import { Route as AuthenticatedChatsRouteImport } from './routes/_authenticated/chats'
@@ -28,68 +29,72 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedCallsRoute = AuthenticatedCallsRouteImport.update({
-  id: '/_authenticated/calls',
+  id: '/calls',
   path: '/calls',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedChatsRoute = AuthenticatedChatsRouteImport.update({
-  id: '/_authenticated/chats',
+  id: '/chats',
   path: '/chats',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedCommunitiesRoute =
   AuthenticatedCommunitiesRouteImport.update({
-    id: '/_authenticated/communities',
+    id: '/communities',
     path: '/communities',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedNewGroupRoute = AuthenticatedNewGroupRouteImport.update({
-  id: '/_authenticated/new-group',
+  id: '/new-group',
   path: '/new-group',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
-  id: '/_authenticated/profile',
+  id: '/profile',
   path: '/profile',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
-  id: '/_authenticated/settings',
+  id: '/settings',
   path: '/settings',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedUpdatesRoute = AuthenticatedUpdatesRouteImport.update({
-  id: '/_authenticated/updates',
+  id: '/updates',
   path: '/updates',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedCallUserIdRoute = AuthenticatedCallUserIdRouteImport.update({
-  id: '/_authenticated/call/$userId',
+  id: '/call/$userId',
   path: '/call/$userId',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedChatChatIdRoute = AuthenticatedChatChatIdRouteImport.update({
-  id: '/_authenticated/chat/$chatId',
+  id: '/chat/$chatId',
   path: '/chat/$chatId',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedContactChatIdRoute =
   AuthenticatedContactChatIdRouteImport.update({
-    id: '/_authenticated/contact/$chatId',
+    id: '/contact/$chatId',
     path: '/contact/$chatId',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedGroupChatIdRoute =
   AuthenticatedGroupChatIdRouteImport.update({
-    id: '/_authenticated/group/$chatId',
+    id: '/group/$chatId',
     path: '/group/$chatId',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -125,6 +130,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/calls': typeof AuthenticatedCallsRoute
   '/_authenticated/chats': typeof AuthenticatedChatsRoute
@@ -172,6 +178,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/auth'
     | '/_authenticated/calls'
     | '/_authenticated/chats'
@@ -188,18 +195,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
-  AuthenticatedCallsRoute: typeof AuthenticatedCallsRoute
-  AuthenticatedChatsRoute: typeof AuthenticatedChatsRoute
-  AuthenticatedCommunitiesRoute: typeof AuthenticatedCommunitiesRoute
-  AuthenticatedNewGroupRoute: typeof AuthenticatedNewGroupRoute
-  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
-  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
-  AuthenticatedUpdatesRoute: typeof AuthenticatedUpdatesRoute
-  AuthenticatedCallUserIdRoute: typeof AuthenticatedCallUserIdRoute
-  AuthenticatedChatChatIdRoute: typeof AuthenticatedChatChatIdRoute
-  AuthenticatedContactChatIdRoute: typeof AuthenticatedContactChatIdRoute
-  AuthenticatedGroupChatIdRoute: typeof AuthenticatedGroupChatIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -209,6 +206,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -223,84 +227,96 @@ declare module '@tanstack/react-router' {
       path: '/calls'
       fullPath: '/calls'
       preLoaderRoute: typeof AuthenticatedCallsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/chats': {
       id: '/_authenticated/chats'
       path: '/chats'
       fullPath: '/chats'
       preLoaderRoute: typeof AuthenticatedChatsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/communities': {
       id: '/_authenticated/communities'
       path: '/communities'
       fullPath: '/communities'
       preLoaderRoute: typeof AuthenticatedCommunitiesRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/new-group': {
       id: '/_authenticated/new-group'
       path: '/new-group'
       fullPath: '/new-group'
       preLoaderRoute: typeof AuthenticatedNewGroupRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/profile': {
       id: '/_authenticated/profile'
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof AuthenticatedProfileRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/settings': {
       id: '/_authenticated/settings'
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/updates': {
       id: '/_authenticated/updates'
       path: '/updates'
       fullPath: '/updates'
       preLoaderRoute: typeof AuthenticatedUpdatesRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/call/$userId': {
       id: '/_authenticated/call/$userId'
       path: '/call/$userId'
       fullPath: '/call/$userId'
       preLoaderRoute: typeof AuthenticatedCallUserIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/chat/$chatId': {
       id: '/_authenticated/chat/$chatId'
       path: '/chat/$chatId'
       fullPath: '/chat/$chatId'
       preLoaderRoute: typeof AuthenticatedChatChatIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/contact/$chatId': {
       id: '/_authenticated/contact/$chatId'
       path: '/contact/$chatId'
       fullPath: '/contact/$chatId'
       preLoaderRoute: typeof AuthenticatedContactChatIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/group/$chatId': {
       id: '/_authenticated/group/$chatId'
       path: '/group/$chatId'
       fullPath: '/group/$chatId'
       preLoaderRoute: typeof AuthenticatedGroupChatIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
-const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AuthRoute: AuthRoute,
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedCallsRoute: typeof AuthenticatedCallsRoute
+  AuthenticatedChatsRoute: typeof AuthenticatedChatsRoute
+  AuthenticatedCommunitiesRoute: typeof AuthenticatedCommunitiesRoute
+  AuthenticatedNewGroupRoute: typeof AuthenticatedNewGroupRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedUpdatesRoute: typeof AuthenticatedUpdatesRoute
+  AuthenticatedCallUserIdRoute: typeof AuthenticatedCallUserIdRoute
+  AuthenticatedChatChatIdRoute: typeof AuthenticatedChatChatIdRoute
+  AuthenticatedContactChatIdRoute: typeof AuthenticatedContactChatIdRoute
+  AuthenticatedGroupChatIdRoute: typeof AuthenticatedGroupChatIdRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCallsRoute: AuthenticatedCallsRoute,
   AuthenticatedChatsRoute: AuthenticatedChatsRoute,
   AuthenticatedCommunitiesRoute: AuthenticatedCommunitiesRoute,
@@ -312,6 +328,15 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedChatChatIdRoute: AuthenticatedChatChatIdRoute,
   AuthenticatedContactChatIdRoute: AuthenticatedContactChatIdRoute,
   AuthenticatedGroupChatIdRoute: AuthenticatedGroupChatIdRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
