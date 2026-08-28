@@ -781,10 +781,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
             .eq("conversation_id", chatId)
             .eq("user_id", meId);
         }
-        const row: Record<string, boolean> = {};
-        if (patch.pinned !== undefined) row['pinned'] = patch.pinned;
-        if (patch.muted !== undefined) row['muted'] = patch.muted;
-        if (patch.archived !== undefined) row['archived'] = patch.archived;
+        const row: { pinned?: boolean; muted?: boolean; archived?: boolean } = {};
+        if (patch.pinned !== undefined) row.pinned = patch.pinned;
+        if (patch.muted !== undefined) row.muted = patch.muted;
+        if (patch.archived !== undefined) row.archived = patch.archived;
         if (Object.keys(row).length === 0) return;
         setMemberRows((rows) =>
           rows.map((r) =>
@@ -805,7 +805,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         const { data, error } = await supabase.rpc("create_group", {
           _title: name,
           _member_ids: memberIds,
-          _description: description ?? null,
+          _description: description ?? undefined,
         });
         if (error) {
           fail("Couldn't create the group", error);
