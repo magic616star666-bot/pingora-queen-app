@@ -560,11 +560,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       },
       updateProfile: async (p) => {
         const id = requireMe();
-        const patch: Record<string, unknown> = {};
-        if (p.name !== undefined) patch['display_name'] = p.name;
-        if (p.about !== undefined) patch['about'] = p.about;
-        if (p.phone !== undefined) patch['phone'] = p.phone;
-        if (p.avatar !== undefined) patch['avatar_url'] = p.avatar ?? null;
+        const patch: {
+          display_name?: string;
+          about?: string;
+          phone?: string | null;
+          avatar_url?: string | null;
+        } = {};
+        if (p.name !== undefined) patch.display_name = p.name;
+        if (p.about !== undefined) patch.about = p.about;
+        if (p.phone !== undefined) patch.phone = p.phone ?? null;
+        if (p.avatar !== undefined) patch.avatar_url = p.avatar ?? null;
         if (Object.keys(patch).length === 0) return;
         const { error } = await supabase.from("profiles").update(patch).eq("id", id);
         if (error) return fail("Couldn't save your profile", error);
@@ -573,17 +578,15 @@ export function StoreProvider({ children }: { children: ReactNode }) {
             r.id === id
               ? {
                   ...r,
-                  display_name: (patch['display_name'] as string) ?? r.display_name,
-                  about: (patch['about'] as string) ?? r.about,
-                  phone: patch['phone'] !== undefined ? ((patch['phone'] as string | null) ?? null) : r.phone,
-                  avatar_url:
-                    patch['avatar_url'] !== undefined
-                      ? ((patch['avatar_url'] as string | null) ?? null)
-                      : r.avatar_url,
+                  display_name: patch.display_name ?? r.display_name,
+                  about: patch.about ?? r.about,
+                  phone: patch.phone !== undefined ? patch.phone : r.phone,
+                  avatar_url: patch.avatar_url !== undefined ? patch.avatar_url : r.avatar_url,
                 }
               : r,
           ),
         );
+
       },
       updateSettings: (p) => setLocal((s) => ({ ...s, settings: { ...s.settings, ...p } })),
 
