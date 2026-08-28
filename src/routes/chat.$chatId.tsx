@@ -27,7 +27,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ME_ID, useStore } from "@/lib/store";
+import { useStore } from "@/lib/store";
 import { dayLabel, lastSeenLabel } from "@/lib/format";
 import type { Message } from "@/lib/types";
 
@@ -99,7 +99,7 @@ function ChatScreen() {
     ? "typing…"
     : chat.kind === "group"
       ? chat.memberIds
-          .map((id) => (id === ME_ID ? "You" : (users[id]?.name.split(" ")[0] ?? "")))
+          .map((id) => (id === store.meId ? "You" : (users[id]?.name.split(" ")[0] ?? "")))
           .join(", ")
       : partner?.online
         ? "online"
@@ -260,12 +260,12 @@ function ChatScreen() {
               )}
               <MessageBubble
                 message={m}
-                author={m.authorId === ME_ID ? store.me : users[m.authorId]}
+                author={m.authorId === store.meId ? store.me : users[m.authorId]}
                 showAuthor={showAuthor}
                 replyTo={replyTarget}
                 replyAuthorName={
                   replyTarget
-                    ? replyTarget.authorId === ME_ID
+                    ? replyTarget.authorId === store.meId
                       ? "You"
                       : users[replyTarget.authorId]?.name
                     : undefined
@@ -300,7 +300,7 @@ function ChatScreen() {
         enterToSend={settings.enterToSend}
         replyTo={replyTo ?? undefined}
         replyAuthorName={
-          replyTo ? (replyTo.authorId === ME_ID ? "You" : users[replyTo.authorId]?.name) : undefined
+          replyTo ? (replyTo.authorId === store.meId ? "You" : users[replyTo.authorId]?.name) : undefined
         }
         onCancelReply={() => setReplyTo(null)}
         editing={editing ?? undefined}

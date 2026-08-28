@@ -14,7 +14,7 @@ import {
 import type { Chat, Message } from "@/lib/types";
 import { listTime } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import { ME_ID } from "@/lib/store";
+import { useStore } from "@/lib/store";
 import { UserAvatar } from "./UserAvatar";
 
 const attachmentIcon = {
@@ -44,7 +44,8 @@ export function ChatRow({
   onLongPress?: ((chat: Chat) => void) | undefined;
 }) {
   const AttachIcon = last?.attachment ? attachmentIcon[last.attachment.kind] : null;
-  const mine = last?.authorId === ME_ID;
+  const { meId } = useStore();
+  const mine = last?.authorId === meId;
 
   const preview = () => {
     if (chat.typing) return <span className="font-medium text-accent">typing…</span>;

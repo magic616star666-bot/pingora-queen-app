@@ -15,7 +15,7 @@ import {
 import type { Message, User } from "@/lib/types";
 import { clockTime, duration } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import { ME_ID } from "@/lib/store";
+import { useStore } from "@/lib/store";
 
 function Ticks({ status }: { status: Message["status"] }) {
   if (status === "sending") return <Clock className="h-3.5 w-3.5 opacity-60" />;
@@ -126,7 +126,8 @@ export function MessageBubble({
   onJumpToReply?: ((id: string) => void) | undefined;
   highlighted?: boolean | undefined;
 }) {
-  const mine = message.authorId === ME_ID;
+  const { meId } = useStore();
+  const mine = message.authorId === meId;
   const pressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   if (message.system) {

@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import type { Message } from "@/lib/types";
 import { quickReactions } from "./EmojiPicker";
-import { ME_ID } from "@/lib/store";
+import { useStore } from "@/lib/store";
 
 export function MessageActionsSheet({
   message,
@@ -24,7 +24,8 @@ export function MessageActionsSheet({
   onForward: () => void;
   onStar: () => void;
 }) {
-  const mine = message?.authorId === ME_ID;
+  const { meId } = useStore();
+  const mine = message?.authorId === meId;
   const actions = [
     { label: "Reply", icon: Reply, run: onReply, show: !message?.deleted },
     {

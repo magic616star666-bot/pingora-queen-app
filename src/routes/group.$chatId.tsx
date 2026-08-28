@@ -3,7 +3,7 @@ import { BellOff, Bell, LogOut, Pin, PinOff, Search, Shield, Trash2, UserPlus } 
 import { toast } from "sonner";
 import { StackScreen } from "@/components/pingora/AppShell";
 import { UserAvatar } from "@/components/pingora/UserAvatar";
-import { ME_ID, useStore } from "@/lib/store";
+import { useStore } from "@/lib/store";
 import { lastSeenLabel } from "@/lib/format";
 
 export const Route = createFileRoute("/group/$chatId")({
@@ -92,7 +92,7 @@ function GroupInfo() {
         </h2>
         <ul className="mt-1">
           {chat.memberIds.map((id) => {
-            const u = id === ME_ID ? store.me : store.users[id];
+            const u = id === store.meId ? store.me : store.users[id];
             if (!u) return null;
             const admin = chat.adminIds?.includes(id);
             return (
@@ -100,7 +100,7 @@ function GroupInfo() {
                 <UserAvatar name={u.name} hue={u.hue} size="sm" online={u.online} />
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-sm font-medium">
-                    {id === ME_ID ? "You" : u.name}
+                    {id === store.meId ? "You" : u.name}
                   </span>
                   <span className="block truncate text-xs text-muted-foreground">
                     {u.online ? "online" : lastSeenLabel(u.lastSeen)}

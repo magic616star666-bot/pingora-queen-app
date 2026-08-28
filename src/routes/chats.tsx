@@ -28,7 +28,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { ME_ID, useStore } from "@/lib/store";
+import { useStore } from "@/lib/store";
 import type { Chat } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -218,7 +218,7 @@ function ChatsScreen() {
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-sm font-medium">{chatTitle(chat)}</span>
                       <span className="block truncate text-xs text-muted-foreground">
-                        {m.authorId === ME_ID ? "You: " : ""}
+                        {m.authorId === store.meId ? "You: " : ""}
                         {m.text}
                       </span>
                     </span>
