@@ -373,7 +373,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         setOnlineIds(Object.keys(channel.presenceState()));
       })
       .subscribe((status) => {
-        console.log("[rt] status", status);
         if (status === "SUBSCRIBED") void channel.track({ at: Date.now() });
       });
 
