@@ -223,14 +223,6 @@ function ChatsScreen() {
         })}
       </ul>
 
-      {store.loadStatus === "ready" && visible.length === 0 && !query && (
-        <div className="px-8 py-16 text-center">
-          <p className="text-base font-semibold">No conversations yet</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Tap the compose button to start your first chat.
-          </p>
-        </div>
-      )}
 
 
       {matchedMessages.length > 0 && (

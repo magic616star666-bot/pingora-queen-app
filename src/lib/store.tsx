@@ -293,6 +293,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setMessageRows((msg.data ?? []) as MessageRow[]);
     setReactionRows((rx.data ?? []) as ReactionRow[]);
     setLoadStatus("ready");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [meId]);
 
   // Ensure a profile row exists for the signed-in user, then load everything.
@@ -379,6 +380,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       channelRef.current = null;
       void supabase.removeChannel(channel);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [meId]);
 
   // Expire typing indicators.
@@ -406,6 +408,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     beat();
     const t = setInterval(beat, 60_000);
     return () => clearInterval(t);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [meId]);
 
   /* -------------------------------------------------------------- derived */
