@@ -173,7 +173,7 @@ function ChatsScreen() {
         </button>
       )}
 
-      {store.loadStatus === "loading" && (
+      {store.loadStatus === "loading" && store.chats.length === 0 && (
         <ul className="px-4 py-2">
           {Array.from({ length: 6 }).map((_, i) => (
             <li key={i} className="flex items-center gap-3 py-3">
