@@ -358,11 +358,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           .then(({ data }) => data && setConvRows(data as ConversationRow[]));
       })
       .on("postgres_changes", { event: "*", schema: "public", table: "conversation_members" }, () => {
-        void supabase
-          .from("conversation_members")
-          .select("*")
-          .then(({ data }) => data && setMemberRows(data as MemberRow[]));
+        // Membership changes can reveal entire conversations (and their members'
+        // profiles) that were previously invisible under RLS, so do a full reload.
+        void load();
       })
+
       .on("broadcast", { event: "typing" }, ({ payload }) => {
         const p = payload as { conversationId: string; userId: string };
         if (p.userId === meId) return;
