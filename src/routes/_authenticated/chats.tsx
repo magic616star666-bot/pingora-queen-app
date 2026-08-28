@@ -32,7 +32,7 @@ import { useStore } from "@/lib/store";
 import type { Chat } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/chats")({
+export const Route = createFileRoute("/_authenticated/chats")({
   head: () => ({
     meta: [
       { title: "Chats · Pingora" },

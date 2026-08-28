@@ -6,7 +6,7 @@ import { UserAvatar } from "@/components/pingora/UserAvatar";
 import { useStore } from "@/lib/store";
 import { listTime } from "@/lib/format";
 
-export const Route = createFileRoute("/communities")({
+export const Route = createFileRoute("/_authenticated/communities")({
   head: () => ({
     meta: [
       { title: "Communities · Pingora" },

@@ -7,7 +7,7 @@ import { useStore } from "@/lib/store";
 import { duration, listTime } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/calls")({
+export const Route = createFileRoute("/_authenticated/calls")({
   head: () => ({
     meta: [
       { title: "Calls · Pingora" },

@@ -31,7 +31,7 @@ import { useStore } from "@/lib/store";
 import { dayLabel, lastSeenLabel } from "@/lib/format";
 import type { Message } from "@/lib/types";
 
-export const Route = createFileRoute("/chat/$chatId")({
+export const Route = createFileRoute("/_authenticated/chat/$chatId")({
   head: () => ({
     meta: [
       { title: "Conversation · Pingora" },

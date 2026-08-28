@@ -7,7 +7,7 @@ import { useStore } from "@/lib/store";
 import { duration } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/call/$userId")({
+export const Route = createFileRoute("/_authenticated/call/$userId")({
   validateSearch: z.object({ mode: z.enum(["voice", "video"]).default("voice") }),
   head: () => ({
     meta: [

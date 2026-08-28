@@ -27,7 +27,7 @@ import { useStore } from "@/lib/store";
 import { agoLabel } from "@/lib/format";
 import type { Settings as SettingsShape } from "@/lib/types";
 
-export const Route = createFileRoute("/settings")({
+export const Route = createFileRoute("/_authenticated/settings")({
   head: () => ({
     meta: [
       { title: "Settings · Pingora" },
