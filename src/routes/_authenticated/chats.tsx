@@ -28,11 +28,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { ME_ID, useStore } from "@/lib/store";
+import { useStore } from "@/lib/store";
 import type { Chat } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/chats")({
+export const Route = createFileRoute("/_authenticated/chats")({
   head: () => ({
     meta: [
       { title: "Chats · Pingora" },
@@ -173,6 +173,36 @@ function ChatsScreen() {
         </button>
       )}
 
+      {store.loadStatus === "loading" && store.chats.length === 0 && (
+        <ul className="px-4 py-2">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <li key={i} className="flex items-center gap-3 py-3">
+              <span className="h-12 w-12 shrink-0 animate-pulse rounded-2xl bg-secondary" />
+              <span className="flex-1 space-y-2">
+                <span className="block h-3.5 w-1/3 animate-pulse rounded-full bg-secondary" />
+                <span className="block h-3 w-2/3 animate-pulse rounded-full bg-secondary" />
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {store.loadStatus === "error" && (
+        <div className="mx-4 mt-6 rounded-3xl border border-border bg-card p-6 text-center">
+          <p className="text-sm font-semibold">We couldn't load your chats</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {store.loadError ?? "Check your connection and try again."}
+          </p>
+          <button
+            type="button"
+            onClick={() => void store.reload()}
+            className="mt-4 rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground"
+          >
+            Try again
+          </button>
+        </div>
+      )}
+
       <ul>
         {visible.map((c) => {
           const last = lastMessage(c.id);
@@ -192,6 +222,8 @@ function ChatsScreen() {
           );
         })}
       </ul>
+
+
 
       {matchedMessages.length > 0 && (
         <section className="mt-2 border-t border-border/60 pt-2">
@@ -218,7 +250,7 @@ function ChatsScreen() {
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-sm font-medium">{chatTitle(chat)}</span>
                       <span className="block truncate text-xs text-muted-foreground">
-                        {m.authorId === ME_ID ? "You: " : ""}
+                        {m.authorId === store.meId ? "You: " : ""}
                         {m.text}
                       </span>
                     </span>
@@ -330,14 +362,26 @@ function ChatsScreen() {
             <span className="text-sm font-semibold">New group</span>
           </button>
           <ul className="-mx-2 flex-1 overflow-y-auto px-2">
-            {Object.values(users).map((u) => (
+            {store.contacts.length === 0 && (
+              <li className="px-2 py-8 text-center text-sm text-muted-foreground">
+                No one else has joined yet. Invite a friend to create a Pingora account and they'll
+                appear here.
+              </li>
+            )}
+            {store.contacts.map((u) => (
               <li key={u.id}>
                 <button
                   type="button"
                   onClick={() => {
-                    const id = store.openDmWith(u.id);
-                    setNewChatOpen(false);
-                    void navigate({ to: "/chat/$chatId", params: { chatId: id } });
+                    void (async () => {
+                      try {
+                        const id = await store.openDmWith(u.id);
+                        setNewChatOpen(false);
+                        void navigate({ to: "/chat/$chatId", params: { chatId: id } });
+                      } catch {
+                        /* error surfaced by the store */
+                      }
+                    })();
                   }}
                   className="flex w-full items-center gap-3 rounded-2xl px-2 py-2 text-left hover:bg-secondary"
                 >

@@ -13,6 +13,7 @@ import {
   Smartphone,
 } from "lucide-react";
 import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 import { StackScreen } from "@/components/pingora/AppShell";
 import { UserAvatar } from "@/components/pingora/UserAvatar";
 import { Switch } from "@/components/ui/switch";
@@ -27,7 +28,7 @@ import { useStore } from "@/lib/store";
 import { agoLabel } from "@/lib/format";
 import type { Settings as SettingsShape } from "@/lib/types";
 
-export const Route = createFileRoute("/settings")({
+export const Route = createFileRoute("/_authenticated/settings")({
   head: () => ({
     meta: [
       { title: "Settings · Pingora" },
@@ -93,6 +94,7 @@ function Choice<K extends keyof SettingsShape>({
 function SettingsScreen() {
   const store = useStore();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { me, settings, updateSettings, devices, blockedIds, users } = store;
 
   return (
@@ -377,9 +379,13 @@ function SettingsScreen() {
         <button
           type="button"
           onClick={() => {
-            store.signOut();
-            toast("Signed out of Pingora");
-            void navigate({ to: "/" });
+            void (async () => {
+              await queryClient.cancelQueries();
+              queryClient.clear();
+              await store.signOut();
+              toast("Signed out of Pingora");
+              void navigate({ to: "/auth", replace: true });
+            })();
           }}
           className="flex w-full items-center gap-3 rounded-3xl border border-border bg-card px-4 py-3.5 text-sm font-semibold text-destructive"
         >

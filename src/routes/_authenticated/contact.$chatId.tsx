@@ -6,7 +6,7 @@ import { UserAvatar } from "@/components/pingora/UserAvatar";
 import { useStore } from "@/lib/store";
 import { lastSeenLabel } from "@/lib/format";
 
-export const Route = createFileRoute("/contact/$chatId")({
+export const Route = createFileRoute("/_authenticated/contact/$chatId")({
   head: () => ({
     meta: [
       { title: "Contact info · Pingora" },

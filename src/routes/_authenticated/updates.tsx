@@ -11,7 +11,7 @@ import { ME_ID, useStore } from "@/lib/store";
 import { agoLabel } from "@/lib/format";
 import type { StatusUpdate } from "@/lib/types";
 
-export const Route = createFileRoute("/updates")({
+export const Route = createFileRoute("/_authenticated/updates")({
   head: () => ({
     meta: [
       { title: "Updates · Pingora" },

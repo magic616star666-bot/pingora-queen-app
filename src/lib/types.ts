@@ -66,6 +66,8 @@ export interface Chat {
   typing?: boolean | undefined;
   createdAt: number;
   communityId?: ID | undefined;
+  /** Local demo conversation (community topic previews) — not stored in the database. */
+  demo?: boolean | undefined;
 }
 
 export interface StatusUpdate {
