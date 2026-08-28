@@ -805,8 +805,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         const { data, error } = await supabase.rpc("create_group", {
           _title: name,
           _member_ids: memberIds,
-          _description: description ?? undefined,
+          ...(description ? { _description: description } : {}),
         });
+
         if (error) {
           fail("Couldn't create the group", error);
           throw error;
